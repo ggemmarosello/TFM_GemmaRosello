@@ -61,7 +61,7 @@ def hyperparameter_tune(model, param_grid, X_train, y_train, iters):
     return best_score, best_params, best_model
 
 
-# ---- Function to perform Threshold tuning to obtain the desired recall ----
+# ---- Function to perform Threshold optimization to obtain the desired recall ----
 
 def select_threshold_for_recall(y_true, probs, target_recall):
 

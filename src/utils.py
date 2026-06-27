@@ -5,39 +5,6 @@ import re
 import unicodedata
 
 
-# ---- Function to create chunks when filtering querys with too much items ----
-
-def chunk_list(users_list, size):
-    for n in range(0, len(users_list), size):
-        yield users_list[n:n+size]
-
-
-# ---- Function to execute an SQL query and get a dataframe from more than one dblink ----
-
-def extract_data(q_ini, dblinks):
-
-    dfs = []
-
-    for dbl in dblinks:
-
-        q = q_ini.format(dbl=dbl)
-            
-        df_dblink = dbc.oracle2pd('ecap', q)
-
-        if df_dblink is not None and not df_dblink.empty:
-            df_dblink['dbl'] = dbl
-            dfs.append(df_dblink)
-                
-        del df_dblink
-
-    if dfs:
-        df = pd.concat(dfs, ignore_index=True)
-        df.columns = df.columns.str.lower()
-        return df
-
-    return pd.DataFrame()
-
-
 # ---- Function to execute one SQL query ----
 
 def run_query(q, dbl):
