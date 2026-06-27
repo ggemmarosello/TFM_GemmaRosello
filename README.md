@@ -9,11 +9,7 @@
 
 ## Overview
 
-This repository contains the code developed for my Master's Thesis:
-
-> **A Data-Driven Framework for Chronicity and Mortality Risk Prediction**
-
-The project develops and evaluates machine learning models for predicting **12-month mortality** in patients aged 70 years and older using routinely collected Electronic Health Records (EHRs). It also investigates the relationship between predicted mortality risk and chronicity (PCC and MACA) in order to assess whether mortality prediction can complement existing chronic patient identification strategies.
+This repository contains the complete data engineering and machine learning pipeline developed for my Master's Thesis. The project develops and evaluates machine learning models for predicting 12-month mortality in patients aged 70 years and older using routinely collected Electronic Health Records (EHRs). It also investigates the relationship between predicted mortality risk and chronicity (PCC and MACA) to assess whether mortality prediction can complement existing chronic patient identification strategies.
 
 ---
 
@@ -31,13 +27,12 @@ TFM_GemmaRosello/
 │   ├── utils.py
 │   └── utils_modeling.py
 │
-├── README.md
-└── requirements.txt
+└── README.md
 ```
 
 ---
 
-## Workflow
+## Pipeline
 
 The repository follows the workflow illustrated below:
 
@@ -55,10 +50,12 @@ Machine learning pipeline
 
 Builds the study cohort and performs patient-level preprocessing, including:
 
+- data extraction from the database
 - patient identifier harmonization
+- study cohort definition
 - mortality data cleaning
 - duplicate resolution
-- chronicity preprocessing
+- data cleaning and preprocessing
 - observation window generation
 - demographic feature engineering
 
@@ -86,14 +83,14 @@ The resulting dataset is used as input for the machine learning models.
 Implements the complete experimental pipeline, including:
 
 - train/validation/test split
-- baseline model comparison
 - hyperparameter optimization
+- threshold optimization
+- baseline model comparison
 - probability calibration
 - class imbalance experiments
-- threshold optimization
 - final model evaluation
-- SHAP explainability
 - chronicity analyses
+- SHAP explainability
 
 Evaluated models:
 
@@ -115,8 +112,7 @@ Utility functions for:
 - parallel database queries
 - patient chunk generation
 - temporary SQL tables
-- dataframe preprocessing
-- column cleaning
+- column names cleaning
 
 ### src/utils_modeling.py
 
@@ -126,7 +122,7 @@ Utility functions for:
 - randomized hyperparameter search
 - threshold optimization
 - model evaluation
-- ROC and Precision–Recall curves
+- ROC-AUC and PR-AUC curves
 - probability calibration
 - calibration curves
 
@@ -136,7 +132,9 @@ Utility functions for:
 
 The Electronic Health Records (EHRs) used in this work were provided by the **Institut Català de la Salut (ICS) Camp de Tarragona**.
 
-The data contain sensitive patient information and **cannot be shared publicly**. Consequently, only the source code is included in this repository.
+The study cohort includes patients aged **70 years and older**, with information extracted from routinely collected primary care records, including demographics, diagnoses, laboratory tests, prescribed medications, and healthcare utilization.
+
+The data contain sensitive patient information and **cannot be shared publicly**. Consequently, this repository contains only the source code used to perform the analyses.
 
 ---
 
@@ -149,60 +147,8 @@ The best-performing model was an **Isotonic-Calibrated LightGBM**, achieving:
 | PR-AUC | **0.720** |
 | ROC-AUC | **0.970** |
 
-The model captured clinically meaningful patterns associated with multimorbidity, frailty, and healthcare complexity while showing a strong relationship between predicted mortality risk and chronicity labels.
+The model captured clinically meaningful patterns associated with multimorbidity, frailty, and healthcare complexity while showing well-calibrated mortality probabilitie.
 
 ---
-
-## Requirements
-
-Install the project dependencies with:
-
-```bash
-pip install -r requirements.txt
-```
-
-Main libraries include:
-
-- pandas
-- numpy
-- scikit-learn
-- LightGBM
-- XGBoost
-- CatBoost
-- imbalanced-learn
-- SHAP
-- matplotlib
-
----
-
-## Running the Project
-
-Execute the notebooks in the following order:
-
-1. `notebooks/01_data_engineering_patient_level.ipynb`
-2. `notebooks/02_data_engineering_healthcare.ipynb`
-3. `notebooks/03_modeling_pipeline.ipynb`
-
----
-
-## Citation
-
-If you use this repository, please cite:
-
-```text
-Roselló Fontanals, G.
-A Data-Driven Framework for Chronicity and Mortality Risk Prediction.
-MSc Thesis, Universitat de Barcelona, 2026.
-```
-
----
-
-## License
-
-This repository is intended for academic and research purposes.
-
-The healthcare data used in this work are not publicly available due to ethical and privacy restrictions.
-````
-
 
 
