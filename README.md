@@ -1,8 +1,5 @@
 # A Data-Driven Framework for Chronicity and Mortality Risk Prediction
 
-````markdown
-# A Data-Driven Framework for Chronicity and Mortality Risk Prediction
-
 **Master's Thesis – MSc in Fundamental Principles of Data Science**  
 **Universitat de Barcelona**
 
